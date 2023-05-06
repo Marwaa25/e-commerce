@@ -6,6 +6,8 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Livewire\ProductsList;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ use App\Http\Controllers\ClientController;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,12 +29,13 @@ Route::get('/', function () {
 
 
 
-
-
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+ 
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,10 +46,10 @@ Route::middleware(['auth','admin'])->group(function () {
     // Route for admin dashboard
 Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
     // Gestion des produits
-Route::get('/products', [ProductController::class, 'index_product'])->name('products.index_product');
-Route::get('/products/show/{product}', [ProductController::class, 'show_product'])->name('products.show_product');
+    Route::get('/products', \App\Http\Livewire\ProductsList::class)->name('products.list');
+
 Route::get('/products/add', [ProductController::class, 'create_product'])->name('products.create_product');
-Route::post('/products', [ProductController::class, 'store_product'])->name('products.store_product');
+Route::post('/products/store', [ProductController::class, 'store_product'])->name('products.store_product');
 Route::get('/products/edit/{product}', [ProductController::class, 'edit_product'])->name('products.edit_product');
 Route::put('/products/update/{product}', [ProductController::class, 'update_product'])->name('products.update_product');
 Route::delete('/products/{product}', [ProductController::class, 'destroy_product'])->name('products.destroy_product');
@@ -70,4 +75,8 @@ Route::delete('/cart/delete/{cart}', [CartController::class, 'delete_cart'])->na
 });
 
 
+//Route pour les produits (tout le monde)
+    
+Route::get('/products', [ProductController::class, 'index_product'])->name('products.index_product');
+Route::get('/products/show/{product}', [ProductController::class, 'show_product'])->name('products.show_product');
 require __DIR__.'/auth.php';

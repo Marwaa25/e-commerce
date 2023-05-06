@@ -3,10 +3,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Category;
 
 class Product extends Model
 {
     use HasFactory;
+    protected $table = 'products';
 
     protected $guarded = ['id'];
     protected $fillable = [
@@ -22,6 +24,7 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    
 
     public function carts()
         {

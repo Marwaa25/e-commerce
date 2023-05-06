@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
         $product->name = 'Nom du produit';
         $product->description = 'Description du produit';
         $product->price = 19.99;
-        $product->category_id = 1; // ID de la catégorie à laquelle appartient le produit
+        $product->category_id = 2; // ID de la catégorie à laquelle appartient le produit
         $product->image = 'cerave-gel-moussant-peaux-normales-a-grasses-473ml.jpg'; // nom de l'image du produit
         // $product->stock = 10;
         // $product->user_id = 1; // ID de l'utilisateur qui a créé le produit

@@ -29,6 +29,14 @@
                         <p class="card-text"><strong>{{ $product->price }} €</strong></p>
                         <p class="card-text">{{ $product->category->name }}</p>
                         <a href="{{ route('products.show_product', $product->id) }}" class="btn btn-primary">{{ __('View') }}</a>
+                        <form method="POST" action="{{ route('cart.add_to_cart', $product->id) }}">
+                            @csrf
+                            <div class="form-group">
+                                <label for="amount">Amount:</label>
+                                <input type="number" class="form-control" id="amount" name="amount" min="1" max="{{ $product->stock }}" value="1">
+                            </div>
+                            <button type="submit" class="btn btn-primary">{{ __('Add to Cart') }}</button>
+                        </form>
                     </div>
                 </div>
                 

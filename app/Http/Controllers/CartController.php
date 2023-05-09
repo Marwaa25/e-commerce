@@ -7,6 +7,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cookie;
+
 
 class CartController extends Controller
 {
@@ -14,59 +16,67 @@ class CartController extends Controller
     // {
     //     $this->middleware('auth');
     // }
-
-    public function add_to_cart(Product $product, Request $request)
+    public function add_to_cart(Request $request, $id)
     {
-        $user_id = Auth::id();
-        $product_id = $product->id;
-
-        $existing_cart = Cart::where('product_id' , $product_id)
-            ->where('user_id',$user_id)
-            ->first();
-
-        if ($existing_cart==null){
-            $request->validate([
-                'amount' => 'required|gte:1|lte:' . $product->stock,
-            ]);
-
-            Cart::create([
-                'user_id'=>$user_id,
-                'product_id'=>$product_id,
-                'amount'=>$request->amount,
-            ]);
+        $product = Product::find($id);
+        $user_id = auth()->id() ?: Cookie::get('guest_user_id');
+    
+        if (!$product) {
+            return back()->withErrors(['message' => 'Product not found']);
         }
-        else{
-            $request->validate([
-                'amount'=>'required|gte:1|lte:' . ($product->stock - $existing_cart->amount),
-            ]);
-            $existing_cart->update([
-                'amount'=>$existing_cart->amount+$request->amount,
-            ]);
+        
+        if (!$user_id) {
+            $user_id = rand(1, 100);
+            
+            Cookie::queue('guest_user_id', $user_id, 60 * 24 * 7); // Set the cookie value
         }
-        return Redirect::route('cart.show_cart');
+        
+        $cart = Cart::where('product_id', $product->id)
+                    ->where('user_id', $user_id)
+                    ->first();
+    
+        if ($cart) {
+            // If the product already exists in the cart, increment the quantity
+            $cart->increment('amount', $request->amount);
+        } else {
+            // If the product does not exist in the cart, add it
+            $cart = new Cart([
+                'product_id' => $product->id,
+                'user_id' => $user_id,
+                'amount' => $request->amount,
+            ]);
+            $cart->save();
+        }
+    
+        return redirect()->route('cart.show_cart')->with('success', 'Product added to cart successfully');
     }
-
+    
     public function show_cart()
     {
-        $user_id = Auth::id();
-        $carts = Cart::where('user_id',$user_id)->get();
-        return view('cart.show_cart',[
-            'carts'=>$carts,
+        $user_id = Auth::id() ?: Cookie::get('guest_user_id');
+        $carts = Cart::where('user_id', $user_id)->get();
+    
+        return view('cart.show_cart', [
+            'carts' => $carts,
         ]);
     }
-
+    
+    // public function edit_cart(Cart $cart)
+    // {
+    //     return view('cart.edit_cart', [
+    //         'cart' => $cart,
+    //     ]);
+    // }
+    
     public function update_cart(Cart $cart, Request $request)
     {
-        $request->validate([
-            'amount'=>'required|gte:1|lte:' . $cart->product->stock
-        ]);
+        $cart->update(['amount' => $request->input('amount')]);
 
-        $cart->update([
-            'amount'=>$request->amount
-        ]);
-
-        return Redirect::route('cart.show_cart');
+    
+        return redirect()->route('cart.show_cart');
     }
+    
+    
 
     public function delete_cart(Cart $cart)
     {

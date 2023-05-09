@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Livewire\ProductsList;
 
 
@@ -67,11 +68,6 @@ Route::middleware(['auth','client'])->group(function () {
 // Route for client dashboard
 Route::get('/client/dashboard', [ClientController::class, 'dashboard'])->name('client_dashboard');
 // Le panier
-Route::get('/cart', [CartController::class, 'show_cart'])->name('cart.show_cart');
-Route::post('/cart/add/{product}', [CartController::class, 'add_to_cart'])->name('cart.add_to_cart');
-Route::get('/cart/edit/{cart}', [CartController::class, 'edit_cart'])->name('cart.edit_cart');
-Route::put('/cart/update/{cart}', [CartController::class, 'update_cart'])->name('cart.update_cart');
-Route::delete('/cart/delete/{cart}', [CartController::class, 'delete_cart'])->name('cart.delete_cart');
 });
 
 
@@ -79,4 +75,21 @@ Route::delete('/cart/delete/{cart}', [CartController::class, 'delete_cart'])->na
     
 Route::get('/products', [ProductController::class, 'index_product'])->name('products.index_product');
 Route::get('/products/show/{product}', [ProductController::class, 'show_product'])->name('products.show_product');
+
+// Route pour le panier
+Route::get('/cart', [CartController::class, 'show_cart'])->name('cart.show_cart');
+Route::post('/cart/add/{product}', [CartController::class, 'add_to_cart'])->name('cart.add_to_cart');
+// Route::get('/cart/{cart}/edit', [CartController::class, 'edit_cart'])->name('cart.edit_cart');
+Route::put('/cart/{cart}', [CartController::class, 'update_cart'])->name('cart.update_cart');
+Route::delete('/cart/delete/{cart}', [CartController::class, 'delete_cart'])->name('cart.delete_cart');
+
+
+// Route pour les categories
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categories.show');
+Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 require __DIR__.'/auth.php';

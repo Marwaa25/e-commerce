@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Livewire\ProductsList;
 
 
@@ -58,7 +59,7 @@ Route::delete('/products/{product}', [ProductController::class, 'destroy_product
 Route::get('/clients', [AdminController::class, 'index'])->name('clients.index');
 Route::get('/clients/{client}', [AdminController::class, 'show'])->name('clients.show');
 Route::get('/clients/create', [AdminController::class, 'create'])->name('clients.create');
-Route::post('/clients', [AAdminController::class, 'store'])->name('clients.store');
+Route::post('/clients', [AdminController::class, 'store'])->name('clients.store');
 // Route::get('/clients/{id}/edit', [AdminController::class, 'edit'])->name('clients.edit');
 // Route::put('/clients/{id}', [AdminController::class, 'update'])->name('clients.update');
 Route::delete('/clients/{id}', [AdminController::class, 'destroy'])->name('clients.destroy');
@@ -67,7 +68,9 @@ Route::delete('/clients/{id}', [AdminController::class, 'destroy'])->name('clien
 Route::middleware(['auth','client'])->group(function () {
 // Route for client dashboard
 Route::get('/client/dashboard', [ClientController::class, 'dashboard'])->name('client_dashboard');
-// Le panier
+Route::get('/paiement', [PaymentController::class, 'show'])->name('payment.show');
+Route::post('/paiement', [PaymentController::class, 'process'])->name('payment.process');
+
 });
 
 
@@ -92,4 +95,8 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categ
 Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
 Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+
+
+
 require __DIR__.'/auth.php';

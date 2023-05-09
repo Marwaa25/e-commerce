@@ -20,7 +20,22 @@ class CartController extends Controller
     {
         $product = Product::find($id);
         $user_id = auth()->id() ?: Cookie::get('guest_user_id');
-    
+        
+        if (Auth::check()) {
+            // Récupérer les produits du panier de l'utilisateur temporaire
+            $guest_user_id = Cookie::get('guest_user_id');
+            $guest_carts = Cart::where('user_id', $guest_user_id)->get();
+        
+            // Mettre à jour les produits du panier avec l'ID de l'utilisateur authentifié
+            foreach ($guest_carts as $cart) {
+                $cart->user_id = Auth::id();
+                $cart->save();
+            }
+        
+            // Supprimer l'ID de l'utilisateur temporaire
+            Cookie::queue(Cookie::forget('guest_user_id'));
+        }
+        
         if (!$product) {
             return back()->withErrors(['message' => 'Product not found']);
         }

@@ -47,6 +47,10 @@
                 </tr>
             </tfoot>
         </table>
+        <div class="text-right">
+            <a href="{{ route('payment.show') }}" class="btn btn-success">Procéder au paiement</a>
+        </div>
+        
 
         {{-- <div class="text-right">
             <a href="{{ route('checkout') }}" class="btn btn-success">Passer la commande</a>

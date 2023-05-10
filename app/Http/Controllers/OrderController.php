@@ -6,6 +6,9 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderStatusUpdate;
+
 
 class OrderController extends Controller
 {
@@ -52,6 +55,9 @@ class OrderController extends Controller
         // Enregistrez la commande en base de données
         $order->save();
 
+        // Appel de la méthode d'envoi de notification par email
+        $order->sendEmailNotification('en attente');
+
         // Affichez la vue orders.index pour afficher toutes les commandes, y compris la nouvelle commande que vous venez de créer
         return redirect()->route('orders.index');
     }
@@ -72,6 +78,9 @@ class OrderController extends Controller
         // Modifier le statut de la commande avec la valeur reçue depuis le formulaire
         $order->status = $request->input('status');
         $order->save();
+
+        // Appel de la méthode d'envoi de notification par email
+        $order->sendEmailNotification($request->input('status'));
 
         // Rediriger vers la page de liste des commandes avec un message de confirmation
         return redirect()->route('orders.index')->with('success_message', 'Le statut de la commande a été modifié avec succès.');

@@ -104,6 +104,8 @@ Route::delete('/orders/{order}', [OrderController::class, 'destroy_order'])->nam
 
 Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
 Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+Route::get('orders/{id}/download-invoice', [OrderController::class, 'download_invoice'])->name('orders.download_invoice');
+
 
 
 Route::view('/promotions', 'promotions.index')->name('promotions.index');

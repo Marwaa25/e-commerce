@@ -11,6 +11,7 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Date de création</th>
+                    <th>Facture</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -22,6 +23,12 @@
                         <td>{{ $order->total }}</td>
                         <td>{{ $order->status }}</td>
                         <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
+                        <td>
+                            <!-- ... -->
+                            <a href="{{ route('orders.download_invoice', $order->id) }}" class="btn btn-primary">
+                                Télécharger la facture
+                            </a>
+                        </td>
                         <td>
                             {{-- <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary btn-sm">Voir</a> --}}
                             <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-secondary btn-sm">Modifier</a>

@@ -8,10 +8,40 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderStatusUpdate;
+use Dompdf\Dompdf;
+use PDF;
+
+
 
 
 class OrderController extends Controller
 {
+    public function download_invoice($id)
+    {
+        // Récupérer la commande correspondante à l'ID donné
+        $order = Order::findOrFail($id);
+    
+        // Vérifier si l'utilisateur connecté est le propriétaire de la commande
+        if (Auth::user()->id !== $order->user_id) {
+            return redirect()->route('orders.index')->with('error_message', "Vous n'êtes pas autorisé à télécharger cette facture.");
+        }
+    
+        // Générer le contenu du PDF à partir des informations de la commande
+        $pdf = new Dompdf();
+        $html = view('orders.invoice', compact('order'))->render();
+        $pdf->loadHtml($html);
+    
+        // Générer le PDF
+        $pdf->render();
+    
+        // Télécharger le PDF en réponse à la requête du client
+        $pdf->stream('facture.pdf');
+    }
+    
+
+
+
+
     public function index_order()
     {
      // Vérifier si l'utilisateur est connecté

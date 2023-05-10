@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PaymentController;
+use \App\Http\Controllers\OrderController;
 use App\Http\Livewire\ProductsList;
 
 
@@ -94,6 +95,15 @@ Route::get('/categories/{id}', [CategoryController::class, 'show'])->name('categ
 Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
 Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
 Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+Route::get('/orders', [OrderController::class, 'index_order'])->name('orders.index');
+Route::get('/orders/create', [OrderController::class, 'create_order'])->name('orders.create_order');
+Route::post('/orders', [OrderController::class, 'store_order'])->name('orders.store_order');
+Route::get('/orders/{order}', [OrderController::class, 'show_order'])->name('orders.show_order');
+Route::delete('/orders/{order}', [OrderController::class, 'destroy_order'])->name('orders.destroy_order');
+
+Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 
 
 Route::view('/promotions', 'promotions.index')->name('promotions.index');

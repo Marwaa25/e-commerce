@@ -9,11 +9,13 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('status');
-            $table->decimal('total_amount', 8, 2);
-            $table->string('payment_intent_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->string('status')->default('pending');
+            $table->float('amount');
+            // $table->dateTime('date');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

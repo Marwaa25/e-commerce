@@ -45,15 +45,15 @@ class DatabaseSeeder extends Seeder
         // $product->user_id = 1; // ID de l'utilisateur qui a créé le produit
         $product->save();
 
-        $product = new Product;
-        $product->name = 'Masque hydratant Caudalie';
-        $product->description = 'Masque hydratant à l\'eau de raisin et huile de jojoba pour une peau douce et éclatante';
-        $product->price = 25.99;
-        $product->category_id = 1; // ID de la catégorie à laquelle appartient le produit
-        $product->image = 'téléchargement.jpg'; // nom de l'image du produit
-        // $product->stock = 10;
-        // $product->user_id = 1; // ID de l'utilisateur qui a créé le produit
-        $product->save();
+        // $product = new Product;
+        // $product->name = 'Masque hydratant Caudalie';
+        // $product->description = 'Masque hydratant à l\'eau de raisin et huile de jojoba pour une peau douce et éclatante';
+        // $product->price = 25.99;
+        // $product->category_id = 1; // ID de la catégorie à laquelle appartient le produit
+        // $product->image = 'téléchargement.jpg'; // nom de l'image du produit
+        // // $product->stock = 10;
+        // // $product->user_id = 1; // ID de l'utilisateur qui a créé le produit
+        // $product->save();
 
         $product = new Product;
         $product->name = 'Eau micellaire Bioderma Sensibio H2O';

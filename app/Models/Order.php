@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -8,15 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'status',
-        'payment_status',
-        'subtotal',
-        'tax',
-        'shipping',
-        'total',
-    ];
+    protected $fillable = ['user_id', 'amount', 'status'];
 
     public function user()
     {
@@ -28,8 +21,10 @@ class Order extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function payment()
+    public function products()
     {
-        return $this->hasOne(Payment::class);
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
+
+
 }

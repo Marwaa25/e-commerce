@@ -30,7 +30,6 @@ Route::get('/', function () {
 
 
 
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -97,6 +96,7 @@ Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('cat
 Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
 
+Route::view('/promotions', 'promotions.index')->name('promotions.index');
 
 
 require __DIR__.'/auth.php';

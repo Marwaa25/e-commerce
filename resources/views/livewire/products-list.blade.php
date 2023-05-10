@@ -1,19 +1,17 @@
 <div>
     <form>
-        <div>
-            <label>Search:</label>
-            <input type="text" wire:model="search">
-            {{-- <button type="button" wire:click="search" class="btn btn-primary">{{ __('Search') }}</button> --}}
-
-
+        <div class="form-group">
+            <label for="search">Search:</label>
+            <input type="text" class="form-control" id="search" wire:model="search">
         </div>
-        <div>
-            <label>Category:</label>
-            <select wire:model="category">
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control" id="category" wire:model="category">
                 <option value="">All</option>
-                <option value="1">Electronics</option>
-                <option value="2">Clothing</option>
-                <option value="3">Books</option>
+                <option value="1">Soin de la peau</option>
+                <option value="2">Soin de cheveux</option>
+                <option value="3">Soin des lèvres</option>
+                <option value="4">Soin des mains</option>
             </select>            
         </div>
     </form>
@@ -22,13 +20,12 @@
             @foreach($products as $product)
             <div class="col-md-4 mb-3">
                 <div class="card">
-                    <img src="{{ asset('storage/images/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}" height="200">
+                    <a href="{{ route('products.show_product', $product->id) }}">
+                        <img src="{{ asset('images/'.$product->image) }}" class="card-img-top" alt="{{ $product->name }}" height="200">
+                    </a>
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
-                        <p class="card-text">{{ $product->description }}</p>
                         <p class="card-text"><strong>{{ $product->price }} €</strong></p>
-                        <p class="card-text">{{ $product->category->name }}</p>
-                        <a href="{{ route('products.show_product', $product->id) }}" class="btn btn-primary">{{ __('View') }}</a>
                         <form method="POST" action="{{ route('cart.add_to_cart', $product->id) }}">
                             @csrf
                             <div class="form-group">
@@ -39,15 +36,15 @@
                         </form>
                     </div>
                 </div>
-                
             </div>
             @endforeach
         </div>
         <div class="row mt-4">
             <div class="col-md-12">
-                {{ $products->links() }}
+                {{ $products->links('pagination::simple-bootstrap-4') }}
             </div>
         </div>        
     </div>
+</div>
  
 </div>

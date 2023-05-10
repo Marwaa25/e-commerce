@@ -1,6 +1,6 @@
-{{-- @extends('layouts.app')
+@extends('layouts.header')
 
-@section('content') --}}
+@section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -43,7 +43,6 @@
                         <label for="image">Image:</label>
                         <input type="file" class="form-control-file" name="image" id="image">
                         @if ($product->image)
-                            <img src="{{ asset('storage/images/' . $product->image) }}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
                         @endif
                         @error('image')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -62,4 +61,4 @@
             </div>
         </div>
     </div>
-{{-- @endsection --}}
+@endsection

@@ -11,7 +11,7 @@
     <!-- JavaScript Bundle with Popper -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -40,6 +40,9 @@
         </div>
     </nav>
 
+</header>
+<body>
+ 
     @yield('content')
 
 </body>

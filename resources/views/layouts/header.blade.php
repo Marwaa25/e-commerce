@@ -53,6 +53,10 @@
                 Panier
               </a>
             </li>
+            <li class="nav-item">
+
+            <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('client_dashboard') }}">Mon compte</a>
+            </li>
           </ul>
         </div>
       </div>

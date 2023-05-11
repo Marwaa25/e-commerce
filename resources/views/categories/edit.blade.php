@@ -1,6 +1,6 @@
 <!-- resources/views/categories/edit.blade.php -->
 
-@extends('layouts.header')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">

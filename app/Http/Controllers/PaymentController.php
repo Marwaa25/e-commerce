@@ -33,7 +33,7 @@ class PaymentController extends Controller
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $token = $request->input('stripeToken');
-        $amount = $request->input('amount');
+        $amount = floatval($request->input('amount')) * 100; // Stripe nécessite que le montant soit en centimes
         $user_id = Auth::id() ?: Cookie::get('guest_user_id');
 
         try {

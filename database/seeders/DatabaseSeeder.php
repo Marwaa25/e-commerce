@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
         $product->description = 'Crème solaire Avène pour peaux sensibles, protection très haute SPF 50+';
         $product->price = 14.99;
         $product->category_id = 1; // ID de la catégorie à laquelle appartient le produit
-        $product->image = 'AVENE-SOLAIRE-ECRAN-CREME-TEINTEE-SPF50-50ML-NEW.jpg'; // nom de l'image du produit
+        $product->image = '1683766820.jpg'; // nom de l'image du produit
         // $product->stock = 10;
         // $product->user_id = 1; // ID de l'utilisateur qui a créé le produit
         $product->save();

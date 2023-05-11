@@ -44,23 +44,26 @@ class OrderController extends Controller
 
     public function index_order()
     {
-     // Vérifier si l'utilisateur est connecté
-     if (!Auth::check()) {
-        return redirect()->route('login')->with('error_message', 'Vous devez être connecté pour accéder à vos commandes.');
+        // Vérifier si l'utilisateur est connecté
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error_message', 'Vous devez être connecté pour accéder à vos commandes.');
+        }
+    
+        // Vérifier si l'utilisateur est un admin
+        if (Auth::user()->isAdmin()) {
+            // Si l'utilisateur est un admin, récupérer toutes les commandes
+            $orders = Order::all();
+            $header = 'layouts.admin';
+        } else {
+            // Si l'utilisateur n'est pas un admin, récupérer seulement ses commandes
+            $user_id = Auth::id() ?: Cookie::get('guest_user_id');
+            $orders = Order::where('user_id', $user_id)->get();
+            $header = 'layouts.header';
+        }
+    
+        return view('orders.index', compact('orders', 'header'));
     }
-
-    // Vérifier si l'utilisateur est un admin
-    if (Auth::user()->isAdmin()) {
-        // Si l'utilisateur est un admin, récupérer toutes les commandes
-        $orders = Order::all();
-    } else {
-        // Si l'utilisateur n'est pas un admin, récupérer seulement ses commandes
-        $user_id = Auth::id() ?: Cookie::get('guest_user_id');
-        $orders = Order::where('user_id', $user_id)->get();
-    }
-
-    return view('orders.index', compact('orders'));
-}
+    
 
     public function create()
     {

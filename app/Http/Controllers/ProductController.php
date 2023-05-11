@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use App\Imports\ProductImport;
+use App\Exports\ProductExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class ProductController extends Controller
 {
@@ -17,11 +21,28 @@ class ProductController extends Controller
     //     $this->middleware('auth')->except('index', 'show');
     // }
 
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        Excel::import(new ProductImport, $file);
+        return  redirect('/products')->back()->with('success', 'Les produits ont été importés avec succès.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
+    }
     public function index_product()
     {
         
         $products = Product::orderBy('created_at', 'desc')->paginate(12);
         return view('products.index_product', compact('products'));
+    }
+    public function index()
+    {
+        
+        $products = Product::orderBy('created_at', 'desc')->paginate(12);
+        return view('products.index', compact('products'));
     }
 
     public function create_product()

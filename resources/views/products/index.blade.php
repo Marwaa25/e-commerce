@@ -1,4 +1,4 @@
-@extends('layouts.header')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -6,8 +6,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                @if (Auth::user()->isAdmin())
-
                 <div>
                     <div class="text-right mb-3">
                         <a href="{{ route('products.export') }}" class="btn btn-primary">
@@ -21,8 +19,6 @@
                         
                         
                     </div>
-                </div>
-                @endif
                     <h1>Products List</h1>
                     @livewire('products-list')
                 </div>

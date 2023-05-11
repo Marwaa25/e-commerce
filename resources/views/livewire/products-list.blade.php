@@ -26,6 +26,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text"><strong>{{ $product->price }} €</strong></p>
+                        @if (!Auth::user()->isAdmin())
                         <form method="POST" action="{{ route('cart.add_to_cart', $product->id) }}">
                             @csrf
                             <div class="form-group">
@@ -34,6 +35,7 @@
                             </div>
                             <button type="submit" class="btn btn-primary">{{ __('Add to Cart') }}</button>
                         </form>
+                        @endif
                     </div>
                 </div>
             </div>

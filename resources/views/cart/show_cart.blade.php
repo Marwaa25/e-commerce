@@ -1,6 +1,8 @@
 @extends('layouts.header')
 
 @section('content')
+@if (!Auth::user()->isAdmin())
+
     <h1>Mon Panier</h1>
 
     @if(count($carts) > 0)
@@ -58,4 +60,5 @@
     @else
         <p>Votre panier est vide.</p>
     @endif
+@endif
 @endsection

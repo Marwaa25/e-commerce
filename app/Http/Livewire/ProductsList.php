@@ -9,30 +9,31 @@ class ProductsList extends Component
 {
     public $search = '';
     public $category = '';
+    public $minPrice = null;
+    public $maxPrice = null;
 
-  public function render()
-{
-    $products = Product::query();
+    public function render()
+    {
+        $products = Product::query();
 
-    if (!empty($this->search)) {
-        $products = $products->where('name', 'like', '%' . $this->search . '%');
+        if (!empty($this->search)) {
+            $products = $products->where('name', 'like', '%' . $this->search . '%');
+        }
+
+        if (!empty($this->minPrice)) {
+            $products = $products->where('price', '>=', $this->minPrice);
+        }
+
+        if (!empty($this->maxPrice)) {
+            $products = $products->where('price', '<=', $this->maxPrice);
+        }
+
+        if (!empty($this->category)) {
+            $products = $products->where('category_id', $this->category);
+        }
+
+        $products = $products->paginate(6);
+
+        return view('livewire.products-list', compact('products'));
     }
-    if (!empty($this->minPrice)) {
-        $products = $products->where('price', '>=', $this->minPrice);
-    }
-    
-    if (!empty($this->maxPrice)) {
-        $products = $products->where('price', '<=', $this->maxPrice);
-    }
-    
-
-    if (!empty($this->category)) {
-        $products = $products->where('category_id', $this->category);
-    }
-
-    $products = $products->paginate(6);
-
-    return view('livewire.products-list', compact('products'));
-}
-
 }

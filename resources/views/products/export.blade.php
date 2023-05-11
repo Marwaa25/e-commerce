@@ -1,23 +1,27 @@
 @extends('layouts.header')
-
 @section('content')
-<div class="card">
-    <div class="card-header">
-        Exporter des produits
-    </div>
-    <div class="card-body">
-        <form action="{{ route('products.export') }}" method="POST">
+    <div class="container">
+        <h1>Importer des produits</h1>
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="format">Format</label>
-                <select class="form-control" id="format" name="format">
-                    <option value="csv">CSV</option>
-                    <option value="xls">Excel</option>
-                    <option value="pdf">PDF</option>
-                </select>
+                <label for="file">Fichier Excel</label>
+                <input type="file" name="file" class="form-control-file @error('file') is-invalid @enderror" id="file">
+                @error('file')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-            <button type="submit" class="btn btn-primary">Exporter</button>
+            <button type="submit" class="btn btn-primary">
+                Importer les produits
+            </button>
         </form>
+        
     </div>
-</div>
 @endsection

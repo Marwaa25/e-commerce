@@ -5,6 +5,14 @@
             <input type="text" class="form-control" id="search" wire:model="search">
         </div>
         <div class="form-group">
+            <label for="minPrice">Minimum Price:</label>
+            <input type="number" class="form-control" id="minPrice" wire:model="minPrice" min="0">
+        </div>
+        <div class="form-group">
+            <label for="maxPrice">Maximum Price:</label>
+            <input type="number" class="form-control" id="maxPrice" wire:model="maxPrice" min="0">
+        </div>
+        <div class="form-group">
             <label for="category">Category:</label>
             <select class="form-control" id="category" wire:model="category">
                 <option value="">All</option>

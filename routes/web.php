@@ -68,6 +68,9 @@ Route::middleware(['auth','admin'])->group(function () {
     Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
     Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
 
+
+
+
         //Route pour la gestion des commandes    
     Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');

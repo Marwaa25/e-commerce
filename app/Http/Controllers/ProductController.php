@@ -21,13 +21,28 @@ class ProductController extends Controller
     //     $this->middleware('auth')->except('index', 'show');
     // }
 
+   
     public function import(Request $request)
     {
-        $file = $request->file('file');
-        Excel::import(new ProductImport, $file);
-        return  redirect('/products')->back()->with('success', 'Les produits ont été importés avec succès.');
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv,txt'
+        ]);
+    
+        $file = $request->file('file')->store('import');
+    
+        $import = new ProductImport;
+        $import->import($file);
+    
+        if ($import->failures()->isNotEmpty()) {
+            Storage::delete($file);
+            return back()->withFailures($import->failures());
+        }
+    
+        Storage::delete($file);
+    
+        return redirect()->route('products.index_product')->with('success', 'Les produits ont été importés avec succès.');
     }
-
+    
     public function export()
     {
         return Excel::download(new ProductExport, 'products.xlsx');

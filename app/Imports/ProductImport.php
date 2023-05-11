@@ -4,47 +4,37 @@ namespace App\Imports;
 
 use App\Models\Product;
 use Illuminate\Support\Collection;
-use Illuminate\Validation\Rule;
-use Maatwebsite\Excel\Validators\ValidationException;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Maatwebsite\Excel\Concerns\WithValidation;
-use Maatwebsite\Excel\Concerns\Importable;
-use Maatwebsite\Excel\Validators\Failure;
 
-
-class ProductImport implements ToCollection, WithValidation
+class ProductImport implements ToCollection
 {
-    public function rules(): array
-    {
-        return [
-            '1' => 'numeric', // Ensure that the second column is numeric
-        ];
-    }
-
+    /**
+    * @param Collection $rows
+    */
     public function collection(Collection $rows)
     {
-        $failures = [];
-
         foreach ($rows as $row) {
-            try {
-                $product = Product::create([
-                    'name' => $row[0],
-                    'price' => $row[1],
-                    'description' => $row[2],
-                ]);
-
-                // ...
-            } catch (\Exception $e) {
-                $failures[] = new Failure(
-                    $row,
-                    $e->getMessage(),
-                    'price' // Attribute causing the error
-                );
-            }
+            Product::create([
+                'id' => $row[0],
+                'name' => $row[1],
+                'description' => $row[2],
+                'price' => $row[3],
+                'image' => $row[4],
+                'stock' => $row[5],
+                'category_id' => $row[6],
+            ]);
         }
+    }
 
-        if (!empty($failures)) {
-            throw new ValidationException(null, $failures);
-        }
+    /**
+     * Import data into the database.
+     *
+     * @param mixed $file
+     * @return void
+     */
+    public function import($file)
+    {
+        $rows = \Maatwebsite\Excel\Facades\Excel::toCollection(new ProductImport, $file);
+        $this->collection($rows->first());
     }
 }

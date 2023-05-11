@@ -15,9 +15,19 @@
                         </a>
                         <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="file">
-                            <button type="submit">Importer</button>
+                            <div class="form-group">
+                                <label for="file">Fichier CSV</label>
+                                <input type="file" name="file" class="form-control-file @error('file') is-invalid @enderror" id="file">
+                                @error('file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        
+                            <button type="submit" class="btn btn-primary">Importer</button>
                         </form>
+                        
                         
                         
                     </div>

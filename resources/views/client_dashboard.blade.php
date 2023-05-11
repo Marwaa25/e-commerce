@@ -12,8 +12,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item"><strong>Nom :</strong> {{ $user->name }}</li>
                             <li class="list-group-item"><strong>Email :</strong> {{ $user->email }}</li>
-                            <li class="list-group-item"><strong>Téléphone :</strong> {{ $user->phone }}</li>
-                            <li class="list-group-item"><strong>Adresse :</strong> {{ $user->address }}</li>
+                            <li class="list-group-item"><strong>Role :</strong> {{ $user->role }}</li>
                         </ul>
                     </div>
                 </div>

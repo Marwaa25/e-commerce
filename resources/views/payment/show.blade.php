@@ -8,7 +8,7 @@
 
         <div class="form-group">
             <label for="amount">Montant à payer (en €)</label>
-            <input type="number" id="amount" name="amount" class="form-control" min="1" value="{{ $total }}">
+            <input type="number" id="amount" name="amount" class="form-control"  step="0.01" value="{{ $total }}">
         </div>
 
         <div class="form-group">

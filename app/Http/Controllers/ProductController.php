@@ -50,7 +50,7 @@ class ProductController extends Controller
     public function index_product()
     {
         // Determine the header layout based on the user's role
-        if (Auth::user()->isAdmin()) {
+        if (Auth::check() && Auth::user()->isAdmin()) {
             $header = 'layouts.admin';
         } else {
             $header = 'layouts.header';

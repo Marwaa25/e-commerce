@@ -34,7 +34,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text"><strong>{{ $product->price }} €</strong></p>
-                        @if (!Auth::user()->isAdmin())
+                        @if (auth()->guest() || (auth()->check() && !auth()->user()->isAdmin()))
                         <form method="POST" action="{{ route('cart.add_to_cart', $product->id) }}">
                             @csrf
                             <div class="form-group">

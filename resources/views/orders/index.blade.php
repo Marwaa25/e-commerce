@@ -11,8 +11,11 @@
                     <th>Total</th>
                     <th>Status</th>
                     <th>Date de création</th>
+                    @if (auth()->check() && !Auth::user()->isAdmin())
+
                     <th>Facture</th>
-                    @if (Auth::user()->isAdmin())
+                    @endif
+                    @if (auth()->check() && Auth::user()->isAdmin())
                     <th>Actions</th>
                     @endif
                 </tr>
@@ -22,17 +25,20 @@
                     <tr>
                         <td>{{ $order->id }}</td>
                         <td>{{ $order->user->name }}</td>
-                        <td>{{ $order->total }}</td>
+                        <td>{{ $order->amount }}</td>
                         <td>{{ $order->status }}</td>
                         <td>{{ $order->created_at->format('d/m/Y H:i') }}</td>
                         <td>
+                            @if (auth()->check() && !Auth::user()->isAdmin())
+
                             <!-- ... -->
                             <a href="{{ route('orders.download_invoice', $order->id) }}" class="btn btn-primary">
                                 Télécharger la facture
                             </a>
+                            @endif
                         </td>
                         <td>
-                            @if (Auth::user()->isAdmin())
+                            @if (auth()->check() && Auth::user()->isAdmin())
 
                             {{-- <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary btn-sm">Voir</a> --}}
                             <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-secondary btn-sm">Modifier</a>

@@ -1,7 +1,7 @@
 @extends('layouts.header')
 
 @section('content')
-@if (!Auth::user()->isAdmin())
+@if (auth()->guest() || (auth()->check() && !auth()->user()->isAdmin()))
 
     <h1>Mon Panier</h1>
 

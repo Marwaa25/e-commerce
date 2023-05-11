@@ -14,7 +14,6 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,9 +28,7 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('orders') ? 'active' : '' }}" href="{{ route('orders.index') }}">Orders</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('categories') ? 'active' : '' }}" href="{{ route('categories.index') }}">Categories</a>
-                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}" href="{{ route('cart.show_cart') }}">Panier</a>
                     </li>

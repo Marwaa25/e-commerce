@@ -11,7 +11,7 @@
                 <p>{{ $product->description }}</p>
                 <p class="font-weight-bold">Prix: {{ $product->price }} €</p>
                 <p>Catégorie: {{ $product->category->name }}</p>
-                @if (!Auth::user()->isAdmin())
+                @if (auth()->guest() || (auth()->check() && !auth()->user()->isAdmin()))
 
                 <form method="POST" action="{{ route('cart.add_to_cart', $product->id) }}">
                     @csrf
@@ -24,7 +24,7 @@
                 @endif
                 <!-- Si vous souhaitez afficher la quantité en stock -->
                 <!-- <p>Stock: {{ $product->stock }}</p> -->
-                @if (Auth::user()->isAdmin())
+                @if (auth()->check() && Auth::user()->isAdmin())
 
                 <a href="{{ route('products.edit_product', ['product' => $product->id]) }}" class="btn btn-primary">Editer</a>
 

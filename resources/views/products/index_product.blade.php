@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                @if (Auth::user()->isAdmin())
+                @if (auth()->check() && auth()->user()->isAdmin())
 
                 <div>
                     <div class="text-right mb-3">

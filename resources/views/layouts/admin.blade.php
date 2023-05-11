@@ -35,6 +35,10 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('categories') ? 'active' : '' }}" href="{{ route('categories.index') }}">Categories</a>
                     </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link {{ request()->routeIs('admin_dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('admin_dashboard') }}">Mon compte</a>
+                    </li>
                 </ul>
             </div>
         </div>

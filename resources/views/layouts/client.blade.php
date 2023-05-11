@@ -35,6 +35,10 @@
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}" href="{{ route('cart.show_cart') }}">Panier</a>
                     </li>
+                    <li class="nav-item">
+
+                        <a class="nav-link {{ request()->routeIs('client_dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('client_dashboard') }}">Mon compte</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -3,6 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Order;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -81,14 +84,20 @@ class AdminController extends Controller
         return redirect()->route('clients.index')->with('success', 'Client supprimé avec succès.');
     }
     public function dashboard()
-    {
-        // récupérer les données nécessaires pour le dashboard
-        $totalUsers = User::count();
-        // $totalOrders = Order::count();
-        // $totalRevenue = Order::sum('total_price');
-        
-        // retourner la vue avec les données
-        return view('admin_dashboard');
-    }
+{
+    $user = auth()->user();
 
+    $orders = Order::all();
+    $months = $orders->groupBy(function($order) {
+        return Carbon::parse($order->created_at)->format('M Y');
+    })->keys();
+    $totals = $orders->groupBy(function($order) {
+        return Carbon::parse($order->created_at)->format('M Y');
+    })->map(function($orders) {
+        return $orders->sum('amount');
+    })->values();
+
+    return view('admin_dashboard', compact('orders','months','totals','user'));
 }
+}
+

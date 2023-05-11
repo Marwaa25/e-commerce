@@ -12,7 +12,9 @@
                     <th>Status</th>
                     <th>Date de création</th>
                     <th>Facture</th>
+                    @if (Auth::user()->isAdmin())
                     <th>Actions</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,8 @@
                             </a>
                         </td>
                         <td>
+                            @if (Auth::user()->isAdmin())
+
                             {{-- <a href="{{ route('orders.show', $order->id) }}" class="btn btn-primary btn-sm">Voir</a> --}}
                             <a href="{{ route('orders.edit', $order->id) }}" class="btn btn-secondary btn-sm">Modifier</a>
                             {{-- <form action="{{ route('orders.destroy', $order->id) }}" method="POST" class="d-inline-block">
@@ -37,6 +41,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette commande ?')">Supprimer</button>
                             </form> --}}
+                            @endif
                         </td>
                     </tr>
                 @endforeach

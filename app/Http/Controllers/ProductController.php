@@ -34,10 +34,19 @@ class ProductController extends Controller
     }
     public function index_product()
     {
-        
+        // Determine the header layout based on the user's role
+        if (Auth::user()->isAdmin()) {
+            $header = 'layouts.admin';
+        } else {
+            $header = 'layouts.header';
+        }
+    
+        // Get the products to display
         $products = Product::orderBy('created_at', 'desc')->paginate(12);
-        return view('products.index_product', compact('products'));
+    
+        return view('products.index_product', compact('products', 'header'));
     }
+    
     public function index()
     {
         

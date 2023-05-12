@@ -25,9 +25,7 @@ use App\Http\Livewire\ProductsList;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 
 
@@ -96,7 +94,7 @@ Route::middleware(['auth','client'])->group(function () {
 
     //Route pour les produits (tout le monde)
     
-Route::get('/products', [ProductController::class, 'index_product'])->name('products.index_product');
+Route::get('/', [ProductController::class, 'index_product'])->name('products.index_product');
 Route::get('/products/show/{product}', [ProductController::class, 'show_product'])->name('products.show_product');
 
     // Route pour le panier

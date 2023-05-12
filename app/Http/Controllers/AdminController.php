@@ -30,14 +30,12 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        // Validation des données
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6',
         ]);
 
-        // Création du client
         User::create([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
@@ -57,14 +55,12 @@ class AdminController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validation des données
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'nullable|string|min:6',
         ]);
 
-        // Mise à jour du client
         $client = User::findOrFail($id);
         $client->name = $validatedData['name'];
         $client->email = $validatedData['email'];
@@ -78,7 +74,6 @@ class AdminController extends Controller
 
     public function destroy($id)
     {
-        // Suppression du client
         User::findOrFail($id)->delete();
 
         return redirect()->route('clients.index')->with('success', 'Client supprimé avec succès.');

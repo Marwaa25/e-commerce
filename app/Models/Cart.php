@@ -19,7 +19,6 @@ class Cart extends Model
         return $this->belongsTo(Product::class);
     }
     
-    // Add a quantity field to store the amount of the product in the cart
     protected $fillable = [
         'user_id',
         'product_id',

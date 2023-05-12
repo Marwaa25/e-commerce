@@ -4,14 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
+
 
 class CategoryController extends Controller
 {
     public function index()
     {
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            $header = 'layouts.admin';
+        } else {
+            $header = 'layouts.header';
+        }
+    
         $categories = Category::all();
 
-        return view('categories.index', compact('categories'));
+        return view('categories.index', compact('categories','header'));
     }
 
     public function create()

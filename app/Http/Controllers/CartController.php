@@ -12,27 +12,21 @@ use Illuminate\Support\Facades\Cookie;
 
 class CartController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
+  
     public function add_to_cart(Request $request, $id)
     {
         $product = Product::find($id);
         $user_id = auth()->id() ?: Cookie::get('guest_user_id');
         
         if (Auth::check()) {
-            // Récupérer les produits du panier de l'utilisateur temporaire
             $guest_user_id = Cookie::get('guest_user_id');
             $guest_carts = Cart::where('user_id', $guest_user_id)->get();
         
-            // Mettre à jour les produits du panier avec l'ID de l'utilisateur authentifié
             foreach ($guest_carts as $cart) {
                 $cart->user_id = Auth::id();
                 $cart->save();
             }
-        
-            // Supprimer l'ID de l'utilisateur temporaire
+
             Cookie::queue(Cookie::forget('guest_user_id'));
         }
         
@@ -51,10 +45,8 @@ class CartController extends Controller
                     ->first();
     
         if ($cart) {
-            // If the product already exists in the cart, increment the quantity
             $cart->increment('amount', $request->amount);
         } else {
-            // If the product does not exist in the cart, add it
             $cart = new Cart([
                 'product_id' => $product->id,
                 'user_id' => $user_id,

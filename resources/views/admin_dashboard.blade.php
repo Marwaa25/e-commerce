@@ -1,6 +1,7 @@
-<x-app-layout>
    
     @include('layouts.admin')
+    <x-app-layout>
+
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-4">

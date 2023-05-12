@@ -14,12 +14,10 @@ class PaymentController extends Controller
 {
     public function show()
     {
-        // Vérifier si l'utilisateur est connecté
         if (!Auth::check()) {
             return redirect()->route('login')->with('error_message', 'Vous devez être connecté pour accéder à la page de paiement.');
         }
 
-        // Si l'utilisateur est connecté, récupérer les produits dans son panier
         $user_id = Auth::id() ?: Cookie::get('guest_user_id');
         $carts = Cart::where('user_id', $user_id)->get();
         $total = $carts->sum(function($cart){ 
@@ -33,7 +31,7 @@ class PaymentController extends Controller
         Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $token = $request->input('stripeToken');
-        $amount = floatval($request->input('amount')) * 100; // Stripe nécessite que le montant soit en centimes
+        $amount = floatval($request->input('amount')) * 100; 
         $user_id = Auth::id() ?: Cookie::get('guest_user_id');
 
         try {
@@ -44,21 +42,18 @@ class PaymentController extends Controller
                 'source' => $token,
             ]);
 
-            // Créer la commande
             $order = new Order([
                 'user_id' => $user_id,
                 'amount' => $amount
             ]);
             $order->save();
             
-            // Attach the products to the order
             $carts = Cart::where('user_id', $user_id)->get();
             foreach ($carts as $cart) {
                 $order->products()->attach($cart->product_id, ['quantity' => $cart->amount]);
             }
             
 
-            // Vider le panier de l'utilisateur
             $carts->each->delete();
 
             return redirect()->route('orders.index')->with('success_message', 'Le paiement a été effectué avec succès. Votre commande a été enregistrée.');

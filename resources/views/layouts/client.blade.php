@@ -18,7 +18,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav ms-auto"> 
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('client_dashboard') }}">Dashboard</a>
                     </li>
@@ -33,15 +33,14 @@
                         <a class="nav-link {{ request()->routeIs('cart') ? 'active' : '' }}" href="{{ route('cart.show_cart') }}">Panier</a>
                     </li>
                     <li class="nav-item">
-
                         <a class="nav-link {{ request()->routeIs('client_dashboard') ? 'active' : '' }}" aria-current="page" href="{{ route('client_dashboard') }}">Mon compte</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
 </header>
+
 <body>
  
     @yield('content')

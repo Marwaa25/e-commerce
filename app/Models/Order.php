@@ -42,8 +42,8 @@ class Order extends Model
     
     public function sendStatusUpdateNotification($newStatus)
     {
-        $user = $this->user; // Récupérez l'utilisateur qui a passé la commande
-        $orderProducts = $this->orderProducts; // Récupérez les produits de la commande
+        $user = $this->user; 
+        $orderProducts = $this->orderProducts; 
         $orderDetails = [
             'id' => $this->id,
             'amount' => $this->total_amount,

@@ -16,11 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth')->except('index', 'show');
-    // }
-
+    
    
     public function import(Request $request)
     {
@@ -49,14 +45,12 @@ class ProductController extends Controller
     }
     public function index_product()
     {
-        // Determine the header layout based on the user's role
         if (Auth::check() && Auth::user()->isAdmin()) {
             $header = 'layouts.admin';
         } else {
             $header = 'layouts.header';
         }
     
-        // Get the products to display
         $products = Product::orderBy('created_at', 'desc')->paginate(12);
     
         return view('products.index_product', compact('products', 'header'));
@@ -138,13 +132,11 @@ public function update_product(Request $request, Product $product)
     $product->category_id = $validatedData['category_id'];
 
     if ($request->hasFile('image')) {
-        // Suppression de l'ancienne image
         $old_image_path = public_path('images/') . $product->image;
         if (File::exists($old_image_path)) {
             File::delete($old_image_path);
         }
 
-        // Enregistrement de la nouvelle image
         $image = $request->file('image');
         $filename = time() . '.' . $image->getClientOriginalExtension();
         $image->move(public_path('images'), $filename);
@@ -161,10 +153,8 @@ public function update_product(Request $request, Product $product)
     {
         
     
-        // Suppression du produit
         $product->delete();
     
-        // Redirection vers la liste des produits avec un message de succès
         return redirect()->route('products.index_product')->with('success', 'Le produit a été supprimé avec succès.');
     }
 }    

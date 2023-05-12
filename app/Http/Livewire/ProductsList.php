@@ -32,7 +32,7 @@ class ProductsList extends Component
             $products = $products->where('category_id', $this->category);
         }
 
-        $products = $products->paginate(6);
+        $products = $products->paginate(8);
 
         return view('livewire.products-list', compact('products'));
     }
